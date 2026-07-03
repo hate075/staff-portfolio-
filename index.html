@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Staff Network Access Panel</title>
+<title>Network Staff Portal</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap');
@@ -13,7 +13,7 @@ body {
     font-family: 'Orbitron', sans-serif;
     background: #05010a;
     color: white;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 /* ===== BACKGROUND ===== */
@@ -23,7 +23,7 @@ body {
     z-index: 0;
 }
 
-/* ===== BOOT SCREEN ===== */
+/* ===== BOOT ===== */
 #boot {
     position: fixed;
     inset: 0;
@@ -33,91 +33,95 @@ body {
     justify-content: center;
     align-items: center;
     z-index: 999;
-    text-align: center;
     color: #c77dff;
 }
 
-.boot-line {
+.boot {
     font-size: 13px;
-    opacity: 0.8;
     margin: 4px;
+    opacity: 0.8;
 }
 
-/* ===== APP ===== */
+/* ===== APP LAYOUT ===== */
 #app {
     display: none;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
     position: relative;
     z-index: 2;
-    max-width: 1100px;
-    margin: auto;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+    width: 240px;
+    background: rgba(10,0,20,0.7);
+    border-right: 1px solid rgba(199,125,255,0.2);
     padding: 20px;
+    backdrop-filter: blur(10px);
 }
 
-/* ===== HEADER ===== */
-.header {
-    text-align: center;
-    margin-top: 10px;
-}
-
-.header h1 {
+.logo {
     color: #c77dff;
-    text-shadow: 0 0 20px #7b2cbf;
+    font-size: 18px;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px #7b2cbf;
 }
 
-.header p {
-    opacity: 0.7;
-}
-
-/* ===== STATS ===== */
-.stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.stat {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(199,125,255,0.2);
-    padding: 14px;
-    border-radius: 12px;
-    text-align: center;
-}
-
-/* ===== DATABASE ===== */
-.db {
-    margin-top: 25px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.record {
-    display: flex;
-    justify-content: space-between;
-    padding: 14px;
+.nav button {
+    width: 100%;
+    margin: 8px 0;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid #7b2cbf;
+    color: white;
     border-radius: 10px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(199,125,255,0.15);
     cursor: pointer;
     transition: 0.3s;
 }
 
-.record:hover {
-    transform: translateX(6px);
-    box-shadow: 0 0 20px rgba(199,125,255,0.3);
+.nav button:hover {
+    background: #7b2cbf;
 }
 
-.role {
-    color: #e0aaff;
-    font-weight: bold;
+/* ===== MAIN ===== */
+.main {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* ===== PAGES ===== */
+.page {
+    display: none;
+}
+
+.active {
+    display: block;
+}
+
+/* ===== DASHBOARD ===== */
+.card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(199,125,255,0.2);
+    padding: 15px;
+    border-radius: 12px;
+    margin: 10px 0;
+}
+
+/* ===== DB ===== */
+.record {
+    display: flex;
+    justify-content: space-between;
+    padding: 14px;
+    margin: 8px 0;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(199,125,255,0.15);
+    cursor: pointer;
 }
 
 /* ===== SKILLS ===== */
-.skills {
-    margin-top: 30px;
-}
-
 .bar {
     height: 8px;
     background: rgba(255,255,255,0.1);
@@ -130,27 +134,22 @@ body {
     background: linear-gradient(90deg,#7b2cbf,#c77dff);
 }
 
-/* ===== BUTTONS SOCIAL ===== */
-.social {
-    margin-top: 40px;
-    text-align: center;
+/* ===== DISCORD PANEL ===== */
+.discord-box {
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #7b2cbf;
+    background: rgba(255,255,255,0.03);
 }
 
 .btn {
     display: inline-block;
-    margin: 10px;
-    padding: 12px 18px;
-    border-radius: 12px;
-    text-decoration: none;
-    font-weight: bold;
-    color: white;
+    margin-top: 15px;
+    padding: 10px 16px;
+    border-radius: 10px;
     background: linear-gradient(45deg,#7b2cbf,#c77dff);
-    box-shadow: 0 0 15px rgba(123,44,191,0.5);
-    transition: 0.3s;
-}
-
-.btn:hover {
-    transform: scale(1.05);
+    color: white;
+    text-decoration: none;
 }
 
 /* ===== MODAL ===== */
@@ -168,9 +167,9 @@ body {
     background: #120022;
     padding: 20px;
     border-radius: 12px;
-    border: 1px solid #7b2cbf;
     width: 90%;
     max-width: 500px;
+    border: 1px solid #7b2cbf;
 }
 
 .close {
@@ -187,51 +186,85 @@ body {
 
 <!-- BOOT -->
 <div id="boot">
-    <div class="boot-line">INITIALIZING NETWORK ACCESS...</div>
-    <div class="boot-line">LOADING STAFF DATABASE...</div>
-    <div class="boot-line">VERIFYING USER: HATE075</div>
-    <div class="boot-line">ACCESS GRANTED ✔</div>
+    <div class="boot">INITIALIZING NETWORK PANEL...</div>
+    <div class="boot">LOADING STAFF DATABASE...</div>
+    <div class="boot">VERIFYING USER: HATE075</div>
+    <div class="boot">ACCESS GRANTED ✔</div>
 </div>
 
 <!-- APP -->
 <div id="app">
 
-<div class="header">
-    <h1>STAFF NETWORK PANEL</h1>
-    <p>HATE075 → HATE076 | Minecraft Staff Experience</p>
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <div class="logo">STAFF PORTAL</div>
+
+    <div class="nav">
+        <button onclick="show('home')">Dashboard</button>
+        <button onclick="show('db')">Experience DB</button>
+        <button onclick="show('contact')">Contact</button>
+    </div>
 </div>
 
-<div class="stats">
-    <div class="stat">🟣 Servers: 9+</div>
-    <div class="stat">⏳ Experience: ~5 Years</div>
-    <div class="stat">🧩 Rank Path: Helper → Co-Owner</div>
-    <div class="stat">🏆 Status: Veteran Staff</div>
+<!-- MAIN -->
+<div class="main">
+
+<!-- HOME -->
+<div id="home" class="page active">
+    <h1>Welcome, HATE075</h1>
+
+    <div class="card">IGN: hate075 → hate076</div>
+    <div class="card">Status: Veteran Staff Member</div>
+    <div class="card">Experience: ~5 Years</div>
+    <div class="card">Servers: 9+</div>
+
+    <div class="card">
+        <h3>Skills</h3>
+
+        Moderation
+        <div class="bar"><div class="fill" style="width:92%"></div></div>
+
+        Leadership
+        <div class="bar"><div class="fill" style="width:87%"></div></div>
+
+        Management
+        <div class="bar"><div class="fill" style="width:90%"></div></div>
+    </div>
 </div>
 
-<div class="db" id="db"></div>
+<!-- DB -->
+<div id="db" class="page">
 
-<div class="skills">
-    <h2>System Skills</h2>
+    <h2>Experience Database</h2>
+    <div id="records"></div>
 
-    <p>Moderation</p>
-    <div class="bar"><div class="fill" style="width:92%"></div></div>
-
-    <p>Leadership</p>
-    <div class="bar"><div class="fill" style="width:87%"></div></div>
-
-    <p>Management</p>
-    <div class="bar"><div class="fill" style="width:89%"></div></div>
-
-    <p>Problem Solving</p>
-    <div class="bar"><div class="fill" style="width:90%"></div></div>
 </div>
 
-<!-- SOCIAL BUTTONS (AGGIUNTI COME VOLEVI) -->
-<div class="social">
-    <a class="btn" href="https://discord.com" target="_blank">💬 Discord</a>
-    <a class="btn" href="https://t.me/hate076" target="_blank">✈ Telegram</a>
+<!-- CONTACT -->
+<div id="contact" class="page">
+
+    <h2>Contact Panel</h2>
+
+    <div class="discord-box">
+        <h3>Discord System</h3>
+        <p>Tag: @hate075</p>
+
+        <p>Status: Available for staff recruitment</p>
+
+        <a class="btn" href="https://discord.com" target="_blank">
+            Open Discord
+        </a>
+
+        <br><br>
+
+        <a class="btn" href="https://t.me/hate076" target="_blank">
+            Open Telegram
+        </a>
+    </div>
+
 </div>
 
+</div>
 </div>
 
 <!-- MODAL -->
@@ -245,66 +278,63 @@ body {
 </div>
 
 <script>
+
 const data = [
- {s:"NovaWorld",r:"SrMod",t:"1.5 anni",m:"Server chiuso"},
- {s:"LattinaCraft",r:"Co-Owner",t:"3 anni",m:"Server chiuso"},
- {s:"MiddleHeart",r:"Helper+",t:"4 mesi",m:"Motivi personali"},
- {s:"Emirates",r:"Staff Manager",t:"4 mesi",m:"Motivi personali"},
+ {s:"NovaWorld",r:"SrMod",t:"1.5 anni",m:"Server closed"},
+ {s:"LattinaCraft",r:"Co-Owner",t:"3 anni",m:"Server closed"},
+ {s:"MiddleHeart",r:"Helper+",t:"4 mesi",m:"Personal reasons"},
+ {s:"Emirates",r:"Staff Manager",t:"4 mesi",m:"Personal reasons"},
  {s:"FusionMc",r:"Helper",t:"24 giorni",m:"Leave"},
  {s:"Lyzard",r:"SrAdmin",t:"1 anno",m:"Depex"},
  {s:"AlphaNet",r:"SrMod",t:"4 mesi",m:"Closed"}
 ];
 
-const db = document.getElementById("db");
+const records = document.getElementById("records");
 
-function load(){
+function loadDB(){
  data.forEach(d=>{
-  let el=document.createElement("div");
+  let el = document.createElement("div");
   el.className="record";
-  el.innerHTML=`
-    <div>
-        <div class="role">${d.r}</div>
-        <div>${d.s}</div>
-    </div>
-    <div>${d.t}</div>
-  `;
-  el.onclick=()=>open(d);
-  db.appendChild(el);
+  el.innerHTML = `<div><b>${d.r}</b><br>${d.s}</div><div>${d.t}</div>`;
+  el.onclick=()=>openM(d);
+  records.appendChild(el);
  });
 }
 
-function open(d){
+function openM(d){
  document.getElementById("modal").style.display="flex";
  document.getElementById("t").innerText=d.s+" - "+d.r;
- document.getElementById("i").innerText="Durata: "+d.t;
- document.getElementById("r").innerText="Motivo: "+d.m;
+ document.getElementById("i").innerText="Duration: "+d.t;
+ document.getElementById("r").innerText="Reason: "+d.m;
 }
 
 function closeM(){
  document.getElementById("modal").style.display="none";
 }
 
-load();
+function show(page){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById(page).classList.add("active");
+}
+
+loadDB();
 
 /* BOOT */
 setTimeout(()=>{
  document.getElementById("boot").style.display="none";
- document.getElementById("app").style.display="block";
+ document.getElementById("app").style.display="flex";
 },2600);
 
 /* STARFIELD */
 const c=document.getElementById("bg");
 const x=c.getContext("2d");
+
 c.width=window.innerWidth;
 c.height=window.innerHeight;
 
 let stars=[];
 for(let i=0;i<140;i++){
- stars.push({
-  x:Math.random()*c.width,
-  y:Math.random()*c.height,
-  r:Math.random()*1.5
- });
+ stars.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.5});
 }
 
 function animate(){
@@ -322,6 +352,7 @@ function animate(){
  requestAnimationFrame(animate);
 }
 animate();
+
 </script>
 
 </body>
