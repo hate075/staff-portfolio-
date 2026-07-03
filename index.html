@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Staff Recruitment System v2.4</title>
+<title>Network Staff Portal</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap');
@@ -16,7 +16,7 @@ body {
     overflow: hidden;
 }
 
-/* ===== BG ===== */
+/* ===== BACKGROUND ===== */
 #bg {
     position: fixed;
     inset: 0;
@@ -42,10 +42,11 @@ body {
     opacity: 0.8;
 }
 
-/* ===== APP ===== */
+/* ===== APP LAYOUT ===== */
 #app {
     display: none;
     height: 100vh;
+    width: 100vw;
     display: flex;
     position: relative;
     z-index: 2;
@@ -57,10 +58,12 @@ body {
     background: rgba(10,0,20,0.7);
     border-right: 1px solid rgba(199,125,255,0.2);
     padding: 20px;
+    backdrop-filter: blur(10px);
 }
 
-.title {
+.logo {
     color: #c77dff;
+    font-size: 18px;
     margin-bottom: 20px;
     text-shadow: 0 0 10px #7b2cbf;
 }
@@ -74,6 +77,7 @@ body {
     color: white;
     border-radius: 10px;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .nav button:hover {
@@ -88,55 +92,90 @@ body {
 }
 
 /* ===== PAGES ===== */
-.page { display:none; }
-.active { display:block; }
+.page {
+    display: none;
+}
 
-/* ===== CARDS ===== */
+.active {
+    display: block;
+}
+
+/* ===== DASHBOARD ===== */
 .card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(199,125,255,0.15);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(199,125,255,0.2);
     padding: 15px;
     border-radius: 12px;
     margin: 10px 0;
 }
 
-/* ===== FORM ===== */
-input, textarea {
-    width: 100%;
-    margin: 8px 0;
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid #7b2cbf;
-    background: rgba(0,0,0,0.3);
-    color: white;
-}
-
-button.submit {
-    padding: 10px 16px;
-    background: linear-gradient(45deg,#7b2cbf,#c77dff);
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    color: white;
-    font-weight: bold;
-}
-
-/* ===== STATUS ===== */
-.status {
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid #7b2cbf;
-    background: rgba(123,44,191,0.2);
-}
-
-/* ===== TABLE ===== */
+/* ===== DB ===== */
 .record {
-    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    padding: 14px;
     margin: 8px 0;
     border-radius: 10px;
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(199,125,255,0.15);
     cursor: pointer;
+}
+
+/* ===== SKILLS ===== */
+.bar {
+    height: 8px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.fill {
+    height: 100%;
+    background: linear-gradient(90deg,#7b2cbf,#c77dff);
+}
+
+/* ===== DISCORD PANEL ===== */
+.discord-box {
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #7b2cbf;
+    background: rgba(255,255,255,0.03);
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    background: linear-gradient(45deg,#7b2cbf,#c77dff);
+    color: white;
+    text-decoration: none;
+}
+
+/* ===== MODAL ===== */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.box {
+    background: #120022;
+    padding: 20px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    border: 1px solid #7b2cbf;
+}
+
+.close {
+    float: right;
+    cursor: pointer;
+    color: red;
 }
 </style>
 </head>
@@ -147,9 +186,9 @@ button.submit {
 
 <!-- BOOT -->
 <div id="boot">
-    <div class="boot">INIT SYSTEM v2.4</div>
-    <div class="boot">LOADING RECRUITMENT MODULE...</div>
-    <div class="boot">VERIFY USER: HATE075</div>
+    <div class="boot">INITIALIZING NETWORK PANEL...</div>
+    <div class="boot">LOADING STAFF DATABASE...</div>
+    <div class="boot">VERIFYING USER: HATE075</div>
     <div class="boot">ACCESS GRANTED ✔</div>
 </div>
 
@@ -158,86 +197,133 @@ button.submit {
 
 <!-- SIDEBAR -->
 <div class="sidebar">
-    <div class="title">RECRUITMENT PANEL</div>
+    <div class="logo">STAFF PORTAL</div>
 
     <div class="nav">
-        <button onclick="show('dash')">Dashboard</button>
-        <button onclick="show('apply')">Apply</button>
-        <button onclick="show('log')">Experience Log</button>
+        <button onclick="show('home')">Dashboard</button>
+        <button onclick="show('db')">Experience DB</button>
+        <button onclick="show('contact')">Contact</button>
     </div>
 </div>
 
 <!-- MAIN -->
 <div class="main">
 
-<!-- DASHBOARD -->
-<div id="dash" class="page active">
+<!-- HOME -->
+<div id="home" class="page active">
+    <h1>Welcome, HATE075</h1>
 
-<h2>Welcome, HATE075</h2>
+    <div class="card">IGN: hate075 → hate076</div>
+    <div class="card">Status: Veteran Staff Member</div>
+    <div class="card">Experience: ~5 Years</div>
+    <div class="card">Servers: 9+</div>
 
-<div class="card">Status: Veteran Staff Candidate</div>
-<div class="card">IGN: hate075 → hate076</div>
-<div class="card">Applications: Open</div>
+    <div class="card">
+        <h3>Skills</h3>
 
-<div class="status">
-Application Status Simulation: <b>READY FOR REVIEW</b>
+        Moderation
+        <div class="bar"><div class="fill" style="width:92%"></div></div>
+
+        Leadership
+        <div class="bar"><div class="fill" style="width:87%"></div></div>
+
+        Management
+        <div class="bar"><div class="fill" style="width:90%"></div></div>
+    </div>
 </div>
 
-</div>
+<!-- DB -->
+<div id="db" class="page">
 
-<!-- APPLY -->
-<div id="apply" class="page">
-
-<h2>Staff Application</h2>
-
-<div class="card">
-<input placeholder="Minecraft IGN">
-<input placeholder="Age">
-<input placeholder="Experience Summary">
-<textarea placeholder="Why should we accept you?"></textarea>
-
-<button class="submit" onclick="fakeSubmit()">Submit Application</button>
-
-<p id="result"></p>
-</div>
-
-</div>
-
-<!-- LOG -->
-<div id="log" class="page">
-
-<h2>Experience Database</h2>
-
-<div class="record">NovaWorld - SrMod</div>
-<div class="record">LattinaCraft - Co-Owner</div>
-<div class="record">MiddleHeart - Helper+</div>
-<div class="record">Emirates - Staff Manager</div>
-<div class="record">FusionMc - Helper</div>
-<div class="record">Lyzard - SrAdmin</div>
-<div class="record">AlphaNet - SrMod</div>
+    <h2>Experience Database</h2>
+    <div id="records"></div>
 
 </div>
 
+<!-- CONTACT -->
+<div id="contact" class="page">
+
+    <h2>Contact Panel</h2>
+
+    <div class="discord-box">
+        <h3>Discord System</h3>
+        <p>Tag: @hate075</p>
+
+        <p>Status: Available for staff recruitment</p>
+
+        <a class="btn" href="https://discord.com" target="_blank">
+            Open Discord
+        </a>
+
+        <br><br>
+
+        <a class="btn" href="https://t.me/hate076" target="_blank">
+            Open Telegram
+        </a>
+    </div>
+
 </div>
+
+</div>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+    <div class="box">
+        <span class="close" onclick="closeM()">X</span>
+        <h2 id="t"></h2>
+        <p id="i"></p>
+        <p id="r"></p>
+    </div>
 </div>
 
 <script>
 
-function show(p){
- document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
- document.getElementById(p).classList.add("active");
+const data = [
+ {s:"NovaWorld",r:"SrMod",t:"1.5 anni",m:"Server closed"},
+ {s:"LattinaCraft",r:"Co-Owner",t:"3 anni",m:"Server closed"},
+ {s:"MiddleHeart",r:"Helper+",t:"4 mesi",m:"Personal reasons"},
+ {s:"Emirates",r:"Staff Manager",t:"4 mesi",m:"Personal reasons"},
+ {s:"FusionMc",r:"Helper",t:"24 giorni",m:"Leave"},
+ {s:"Lyzard",r:"SrAdmin",t:"1 anno",m:"Depex"},
+ {s:"AlphaNet",r:"SrMod",t:"4 mesi",m:"Closed"}
+];
+
+const records = document.getElementById("records");
+
+function loadDB(){
+ data.forEach(d=>{
+  let el = document.createElement("div");
+  el.className="record";
+  el.innerHTML = `<div><b>${d.r}</b><br>${d.s}</div><div>${d.t}</div>`;
+  el.onclick=()=>openM(d);
+  records.appendChild(el);
+ });
 }
 
-function fakeSubmit(){
- document.getElementById("result").innerText =
- "Application submitted successfully ✔ (simulation)";
+function openM(d){
+ document.getElementById("modal").style.display="flex";
+ document.getElementById("t").innerText=d.s+" - "+d.r;
+ document.getElementById("i").innerText="Duration: "+d.t;
+ document.getElementById("r").innerText="Reason: "+d.m;
 }
+
+function closeM(){
+ document.getElementById("modal").style.display="none";
+}
+
+function show(page){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById(page).classList.add("active");
+}
+
+loadDB();
 
 /* BOOT */
 setTimeout(()=>{
  document.getElementById("boot").style.display="none";
  document.getElementById("app").style.display="flex";
-},2500);
+},2600);
 
 /* STARFIELD */
 const c=document.getElementById("bg");
@@ -247,7 +333,7 @@ c.width=window.innerWidth;
 c.height=window.innerHeight;
 
 let stars=[];
-for(let i=0;i<120;i++){
+for(let i=0;i<140;i++){
  stars.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.5});
 }
 
@@ -256,7 +342,7 @@ function animate(){
  x.fillStyle="white";
 
  stars.forEach(s=>{
-  s.y+=0.3;
+  s.y+=0.25;
   if(s.y>c.height) s.y=0;
   x.beginPath();
   x.arc(s.x,s.y,s.r,0,Math.PI*2);
