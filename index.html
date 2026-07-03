@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Staff Network Access Panel</title>
+<title>Staff Panel Access</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap');
@@ -12,11 +12,11 @@ body {
     margin: 0;
     font-family: 'Orbitron', sans-serif;
     background: #05010a;
-    color: white;
-    overflow-x: hidden;
+    color: #fff;
+    overflow: hidden;
 }
 
-/* ===== BACKGROUND ===== */
+/* ===== CANVAS ===== */
 #bg {
     position: fixed;
     inset: 0;
@@ -29,46 +29,42 @@ body {
     inset: 0;
     background: black;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     z-index: 999;
-    text-align: center;
     color: #c77dff;
+    text-align: center;
 }
 
-.boot-line {
-    font-size: 13px;
+.boot-text {
+    font-size: 14px;
     opacity: 0.8;
-    margin: 4px;
+    margin: 5px;
 }
 
-/* ===== APP ===== */
+/* ===== MAIN PANEL ===== */
 #app {
     display: none;
     position: relative;
     z-index: 2;
+    padding: 20px;
     max-width: 1100px;
     margin: auto;
-    padding: 20px;
 }
 
-/* ===== HEADER ===== */
+/* HEADER */
 .header {
     text-align: center;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .header h1 {
     color: #c77dff;
-    text-shadow: 0 0 20px #7b2cbf;
+    text-shadow: 0 0 15px #7b2cbf;
 }
 
-.header p {
-    opacity: 0.7;
-}
-
-/* ===== STATS ===== */
+/* STATS */
 .stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -77,14 +73,14 @@ body {
 }
 
 .stat {
-    background: rgba(255,255,255,0.04);
+    background: rgba(255,255,255,0.05);
     border: 1px solid rgba(199,125,255,0.2);
-    padding: 14px;
+    padding: 12px;
     border-radius: 12px;
     text-align: center;
 }
 
-/* ===== DATABASE ===== */
+/* DATABASE */
 .db {
     margin-top: 25px;
     display: flex;
@@ -104,7 +100,7 @@ body {
 }
 
 .record:hover {
-    transform: translateX(6px);
+    transform: translateX(5px);
     box-shadow: 0 0 20px rgba(199,125,255,0.3);
 }
 
@@ -113,7 +109,7 @@ body {
     font-weight: bold;
 }
 
-/* ===== SKILLS ===== */
+/* SKILLS */
 .skills {
     margin-top: 30px;
 }
@@ -122,7 +118,6 @@ body {
     height: 8px;
     background: rgba(255,255,255,0.1);
     border-radius: 10px;
-    overflow: hidden;
 }
 
 .fill {
@@ -130,30 +125,7 @@ body {
     background: linear-gradient(90deg,#7b2cbf,#c77dff);
 }
 
-/* ===== BUTTONS SOCIAL ===== */
-.social {
-    margin-top: 40px;
-    text-align: center;
-}
-
-.btn {
-    display: inline-block;
-    margin: 10px;
-    padding: 12px 18px;
-    border-radius: 12px;
-    text-decoration: none;
-    font-weight: bold;
-    color: white;
-    background: linear-gradient(45deg,#7b2cbf,#c77dff);
-    box-shadow: 0 0 15px rgba(123,44,191,0.5);
-    transition: 0.3s;
-}
-
-.btn:hover {
-    transform: scale(1.05);
-}
-
-/* ===== MODAL ===== */
+/* MODAL */
 .modal {
     position: fixed;
     inset: 0;
@@ -187,25 +159,25 @@ body {
 
 <!-- BOOT -->
 <div id="boot">
-    <div class="boot-line">INITIALIZING NETWORK ACCESS...</div>
-    <div class="boot-line">LOADING STAFF DATABASE...</div>
-    <div class="boot-line">VERIFYING USER: HATE075</div>
-    <div class="boot-line">ACCESS GRANTED ✔</div>
+    <div class="boot-text">INITIALIZING STAFF DATABASE...</div>
+    <div class="boot-text">LOADING EXPERIENCE LOGS...</div>
+    <div class="boot-text">VERIFYING USER: HATE075</div>
+    <div class="boot-text">ACCESS GRANTED</div>
 </div>
 
 <!-- APP -->
 <div id="app">
 
 <div class="header">
-    <h1>STAFF NETWORK PANEL</h1>
-    <p>HATE075 → HATE076 | Minecraft Staff Experience</p>
+    <h1>STAFF DATABASE PANEL</h1>
+    <p>HATE075 → HATE076</p>
 </div>
 
 <div class="stats">
-    <div class="stat">🟣 Servers: 9+</div>
-    <div class="stat">⏳ Experience: ~5 Years</div>
-    <div class="stat">🧩 Rank Path: Helper → Co-Owner</div>
-    <div class="stat">🏆 Status: Veteran Staff</div>
+    <div class="stat">Servers: 9+</div>
+    <div class="stat">Experience: ~5 Years</div>
+    <div class="stat">Rank Path: Helper → Co-Owner</div>
+    <div class="stat">Status: Experienced</div>
 </div>
 
 <div class="db" id="db"></div>
@@ -217,19 +189,10 @@ body {
     <div class="bar"><div class="fill" style="width:92%"></div></div>
 
     <p>Leadership</p>
-    <div class="bar"><div class="fill" style="width:87%"></div></div>
+    <div class="bar"><div class="fill" style="width:85%"></div></div>
 
     <p>Management</p>
-    <div class="bar"><div class="fill" style="width:89%"></div></div>
-
-    <p>Problem Solving</p>
-    <div class="bar"><div class="fill" style="width:90%"></div></div>
-</div>
-
-<!-- SOCIAL BUTTONS (AGGIUNTI COME VOLEVI) -->
-<div class="social">
-    <a class="btn" href="https://discord.com" target="_blank">💬 Discord</a>
-    <a class="btn" href="https://t.me/hate076" target="_blank">✈ Telegram</a>
+    <div class="bar"><div class="fill" style="width:88%"></div></div>
 </div>
 
 </div>
@@ -246,10 +209,10 @@ body {
 
 <script>
 const data = [
- {s:"NovaWorld",r:"SrMod",t:"1.5 anni",m:"Server chiuso"},
- {s:"LattinaCraft",r:"Co-Owner",t:"3 anni",m:"Server chiuso"},
- {s:"MiddleHeart",r:"Helper+",t:"4 mesi",m:"Motivi personali"},
- {s:"Emirates",r:"Staff Manager",t:"4 mesi",m:"Motivi personali"},
+ {s:"NovaWorld",r:"SrMod",t:"1.5 anni",m:"Server closed"},
+ {s:"LattinaCraft",r:"Co-Owner",t:"3 anni",m:"Server closed"},
+ {s:"MiddleHeart",r:"Helper+",t:"4 mesi",m:"Personal reasons"},
+ {s:"Emirates",r:"Staff Manager",t:"4 mesi",m:"Personal reasons"},
  {s:"FusionMc",r:"Helper",t:"24 giorni",m:"Leave"},
  {s:"Lyzard",r:"SrAdmin",t:"1 anno",m:"Depex"},
  {s:"AlphaNet",r:"SrMod",t:"4 mesi",m:"Closed"}
@@ -259,15 +222,9 @@ const db = document.getElementById("db");
 
 function load(){
  data.forEach(d=>{
-  let el=document.createElement("div");
+  let el = document.createElement("div");
   el.className="record";
-  el.innerHTML=`
-    <div>
-        <div class="role">${d.r}</div>
-        <div>${d.s}</div>
-    </div>
-    <div>${d.t}</div>
-  `;
+  el.innerHTML = `<div><div class="role">${d.r}</div><div>${d.s}</div></div><div>${d.t}</div>`;
   el.onclick=()=>open(d);
   db.appendChild(el);
  });
@@ -276,8 +233,8 @@ function load(){
 function open(d){
  document.getElementById("modal").style.display="flex";
  document.getElementById("t").innerText=d.s+" - "+d.r;
- document.getElementById("i").innerText="Durata: "+d.t;
- document.getElementById("r").innerText="Motivo: "+d.m;
+ document.getElementById("i").innerText="Duration: "+d.t;
+ document.getElementById("r").innerText="Reason: "+d.m;
 }
 
 function closeM(){
@@ -290,7 +247,7 @@ load();
 setTimeout(()=>{
  document.getElementById("boot").style.display="none";
  document.getElementById("app").style.display="block";
-},2600);
+},2500);
 
 /* STARFIELD */
 const c=document.getElementById("bg");
@@ -299,29 +256,23 @@ c.width=window.innerWidth;
 c.height=window.innerHeight;
 
 let stars=[];
-for(let i=0;i<140;i++){
- stars.push({
-  x:Math.random()*c.width,
-  y:Math.random()*c.height,
-  r:Math.random()*1.5
- });
+for(let i=0;i<120;i++){
+ stars.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.5});
 }
 
-function animate(){
+function a(){
  x.clearRect(0,0,c.width,c.height);
  x.fillStyle="white";
-
  stars.forEach(s=>{
-  s.y+=0.25;
+  s.y+=0.3;
   if(s.y>c.height) s.y=0;
   x.beginPath();
   x.arc(s.x,s.y,s.r,0,Math.PI*2);
   x.fill();
  });
-
- requestAnimationFrame(animate);
+ requestAnimationFrame(a);
 }
-animate();
+a();
 </script>
 
 </body>
