@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minecraft Staff Portfolio</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Orbitron', sans-serif;
+    background: #05010a;
+    color: white;
+    overflow-x: hidden;
+}
+
+/* ===== CANVAS STARS ===== */
+#stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+/* ===== HEADER ===== */
+header {
+    text-align: center;
+    padding: 40px 20px 10px;
+    position: relative;
+    z-index: 2;
+}
+
+h1 {
+    font-size: 26px;
+    color: #c77dff;
+    text-shadow: 0 0 15px #7b2cbf;
+}
+
+.subtitle {
+    opacity: 0.7;
+    margin-top: 10px;
+}
+
+/* ===== BUTTONS ===== */
+.buttons {
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 10px 16px;
+    margin: 5px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(45deg, #7b2cbf, #c77dff);
+    box-shadow: 0 0 15px rgba(123,44,191,0.5);
+    transition: 0.3s;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+/* ===== FILTERS ===== */
+.filters {
+    text-align: center;
+    margin: 20px;
+}
+
+.filter-btn {
+    margin: 5px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid #7b2cbf;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.filter-btn:hover {
+    background: #7b2cbf;
+}
+
+/* ===== GRID ===== */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 15px;
+    padding: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+/* ===== CARD ===== */
+.card {
+    padding: 18px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(199,125,255,0.2);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    transition: 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(199,125,255,0.2), transparent 60%);
+    transform: rotate(25deg);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 25px rgba(199,125,255,0.4);
+}
+
+.role {
+    font-size: 14px;
+    color: #e0aaff;
+}
+
+.server {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.time {
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+/* ===== MODAL ===== */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.modal-content {
+    width: 90%;
+    max-width: 500px;
+    background: #120022;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid #7b2cbf;
+    box-shadow: 0 0 30px rgba(123,44,191,0.5);
+}
+
+.close {
+    float: right;
+    cursor: pointer;
+    color: red;
+}
+
+img {
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="stars"></canvas>
+
+<header>
+    <h1>IGN: hate075 → hate076</h1>
+    <div class="subtitle">Minecraft Staff Experience Portfolio</div>
+
+    <div class="buttons">
+        <button class="btn" onclick="window.open('https://discord.com')">Discord</button>
+        <button class="btn" onclick="window.open('https://t.me/hate076')">Telegram</button>
+    </div>
+</header>
+
+<div class="filters">
+    <button class="filter-btn" onclick="filter('all')">Tutti</button>
+    <button class="filter-btn" onclick="filter('helper')">Helper</button>
+    <button class="filter-btn" onclick="filter('mod')">Mod</button>
+    <button class="filter-btn" onclick="filter('admin')">Admin+</button>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">X</span>
+        <h2 id="title"></h2>
+        <p id="info"></p>
+        <p id="reason"></p>
+        <img src="" id="img">
+    </div>
+</div>
+
+<script>
+const data = [
+ {server:"NovaWorld", role:"SrMod", type:"mod", time:"1 anno e mezzo", reason:"Server chiuso", img:""},
+ {server:"LattinaCraft", role:"Co-Owner", type:"admin", time:"3 anni", reason:"Server chiuso", img:""},
+ {server:"MiddleHeart", role:"Helper+", type:"helper", time:"3/4 mesi", reason:"Problemi personali", img:""},
+ {server:"Emirates", role:"Staff Manager", type:"admin", time:"3/4 mesi", reason:"Motivi personali", img:""},
+ {server:"FusionMc", role:"Helper", type:"helper", time:"24 giorni", reason:"Motivi personali", img:""},
+ {server:"Lyzard", role:"SrAdmin", type:"admin", time:"1 anno", reason:"Depex", img:""},
+ {server:"WarAccademy", role:"Supporter", type:"helper", time:"poco", reason:"Problemi personali", img:""},
+ {server:"CoralMc", role:"Helper", type:"helper", time:"1 mese", reason:"-", img:""},
+ {server:"AlphaNet", role:"SrMod", type:"mod", time:"4 mesi", reason:"Chiuso", img:""}
+];
+
+const grid = document.getElementById("grid");
+
+function render(filterType="all"){
+ grid.innerHTML="";
+ data.forEach((d,i)=>{
+  if(filterType!="all" && d.type!=filterType) return;
+
+  let div=document.createElement("div");
+  div.className="card";
+  div.innerHTML=`
+   <div class="role">${d.role}</div>
+   <div class="server">${d.server}</div>
+   <div class="time">${d.time}</div>
+  `;
+  div.onclick=()=>openModal(d);
+  grid.appendChild(div);
+ });
+}
+
+function openModal(d){
+ document.getElementById("modal").style.display="flex";
+ document.getElementById("title").innerText=d.server+" - "+d.role;
+ document.getElementById("info").innerText="Durata: "+d.time;
+ document.getElementById("reason").innerText="Motivo: "+d.reason;
+ document.getElementById("img").src=d.img || "https://via.placeholder.com/400x200";
+}
+
+function closeModal(){
+ document.getElementById("modal").style.display="none";
+}
+
+function filter(t){render(t);}
+render();
+
+/* ===== STAR PARTICLES ===== */
+const canvas=document.getElementById("stars");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let stars=[];
+for(let i=0;i<120;i++){
+ stars.push({
+  x:Math.random()*canvas.width,
+  y:Math.random()*canvas.height,
+  r:Math.random()*2
+ });
+}
+
+function animate(){
+ ctx.clearRect(0,0,canvas.width,canvas.height);
+ ctx.fillStyle="white";
+
+ stars.forEach(s=>{
+  s.y+=0.3;
+  if(s.y>canvas.height) s.y=0;
+  ctx.beginPath();
+  ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+  ctx.fill();
+ });
+
+ requestAnimationFrame(animate);
+}
+animate();
+</script>
+
+</body>
+</html>
